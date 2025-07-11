@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Move, MousePointerClick, Download, FileImage } from 'lucide-react';
+import { ArrowRight, Move, MousePointerClick, Download, FileImage, UploadCloud } from 'lucide-react';
 import Footer from '@/components/footer';
 
 export default function LandingPage() {
@@ -80,7 +80,44 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="py-16 md:py-24 bg-background">
+        <section id="how-it-works" className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              How It Works in 3 Easy Steps
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div className="flex flex-col items-center">
+                <div className="p-4 bg-primary/10 rounded-full mb-4">
+                  <UploadCloud className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">1. Upload Your Images</h3>
+                <p className="text-muted-foreground">
+                  Click the upload area or drag and drop your image files. You can select multiple images at once.
+                </p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="p-4 bg-primary/10 rounded-full mb-4">
+                  <Move className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">2. Arrange the Order</h3>
+                <p className="text-muted-foreground">
+                  Once uploaded, simply drag the images to arrange them in the perfect sequence for your PDF.
+                </p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="p-4 bg-primary/10 rounded-full mb-4">
+                  <Download className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">3. Download Your PDF</h3>
+                <p className="text-muted-foreground">
+                  Give your file a name, click the "Create & Download" button, and your PDF will be ready instantly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-24 bg-secondary">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start?</h2>
             <p className="text-lg text-muted-foreground mb-8">
