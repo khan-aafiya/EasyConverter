@@ -19,17 +19,22 @@ type ImageFile = {
 };
 
 function AdSlot() {
+  const adRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
-    try {
-      // @ts-ignore
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error(err);
+    // Only push the ad if the container is visible (has a width)
+    if (adRef.current && adRef.current.offsetWidth > 0) {
+      try {
+        // @ts-ignore
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (err) {
+        console.error("AdSense error:", err);
+      }
     }
   }, []);
 
   return (
-    <div className="w-40 sticky top-8">
+    <div ref={adRef} className="w-40 sticky top-8">
       <ins className="adsbygoogle"
            style={{ display: 'block' }}
            data-ad-client="ca-pub-4573761203080537"
