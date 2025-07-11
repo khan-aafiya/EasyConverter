@@ -4,6 +4,7 @@
 import { useState, useRef, DragEvent, ChangeEvent, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script';
 import { UploadCloud, FileDown, GripVertical, X, Loader2, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -16,6 +17,29 @@ type ImageFile = {
   file: File;
   preview: string;
 };
+
+function AdSlot() {
+  useEffect(() => {
+    try {
+      // @ts-ignore
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  return (
+    <div className="w-40 sticky top-8">
+      <ins className="adsbygoogle"
+           style={{ display: 'block' }}
+           data-ad-client="ca-pub-4573761203080537"
+           data-ad-slot="6635979897"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+  );
+}
+
 
 export default function ConvertorPage() {
   const [images, setImages] = useState<ImageFile[]>([]);
@@ -174,130 +198,138 @@ export default function ConvertorPage() {
 
   return (
       <main className="min-h-screen p-4 sm:p-8">
-        <div className="max-w-5xl mx-auto space-y-8">
-          <header className="text-center relative">
-             <Button variant="outline" size="icon" className="absolute top-0 left-0" asChild>
-              <Link href="/" aria-label="Back to Home">
-                <Home className="h-4 w-4" />
-              </Link>
-            </Button>
-            <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Easy Convertor</h1>
-            <p className="text-muted-foreground mt-2 text-lg">Convert your images to PDF in three simple steps.</p>
-          </header>
+        <div className="flex justify-center gap-8">
+          <aside className="hidden xl:block">
+            <AdSlot />
+          </aside>
+          <div className="max-w-5xl w-full flex-shrink-0 space-y-8">
+            <header className="text-center relative">
+              <Button variant="outline" size="icon" className="absolute top-0 left-0" asChild>
+                <Link href="/" aria-label="Back to Home">
+                  <Home className="h-4 w-4" />
+                </Link>
+              </Button>
+              <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Easy Convertor</h1>
+              <p className="text-muted-foreground mt-2 text-lg">Convert your images to PDF in three simple steps.</p>
+            </header>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <UploadCloud className="text-primary"/>
-                Step 1: Upload Images
-              </CardTitle>
-              <CardDescription>Drag & drop your images or click to select files. You can reorder them later.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div
-                onDragOver={onDragOver}
-                onDragLeave={onDragLeave}
-                onDrop={onDrop}
-                onClick={() => fileInputRef.current?.click()}
-                className={cn(
-                  "border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors",
-                  "hover:border-primary hover:bg-primary/5",
-                  isDraggingOver ? "border-primary bg-primary/10" : "border-border"
-                )}
-              >
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={onFileChange}
-                  className="hidden"
-                />
-                <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground" />
-                <p className="mt-4 text-muted-foreground">Drop files here or click to browse</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {images.length > 0 && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <GripVertical className="text-primary"/>
-                  Step 2: Reorder Images
+                  <UploadCloud className="text-primary"/>
+                  Step 1: Upload Images
                 </CardTitle>
-                <CardDescription>Drag and drop the images to set their order in the final PDF.</CardDescription>
+                <CardDescription>Drag & drop your images or click to select files. You can reorder them later.</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {images.map((image, index) => (
-                    <div
-                      key={image.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e, index)}
-                      onDragEnter={(e) => onDragEnter(e, index)}
-                      onDragEnd={onDragEnd}
-                      className="relative group aspect-square border rounded-lg overflow-hidden shadow-sm cursor-grab active:cursor-grabbing transition-transform will-change-transform"
-                    >
-                      <Image src={image.preview} alt={`preview ${index + 1}`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw" />
-                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                         <GripVertical className="text-white w-8 h-8" />
-                      </div>
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                        onClick={() => onRemoveImage(image.id)}
-                      >
-                        <X className="h-4 w-4" />
-                        <span className="sr-only">Remove image</span>
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {images.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileDown className="text-primary"/>
-                  Step 3: Create and Download
-                </CardTitle>
-                <CardDescription>Name your PDF file and click the button to generate and download it.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Input
-                    placeholder="Enter PDF name"
-                    value={pdfName}
-                    onChange={(e) => setPdfName(e.target.value)}
-                    className="flex-grow"
+                <div
+                  onDragOver={onDragOver}
+                  onDragLeave={onDragLeave}
+                  onDrop={onDrop}
+                  onClick={() => fileInputRef.current?.click()}
+                  className={cn(
+                    "border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors",
+                    "hover:border-primary hover:bg-primary/5",
+                    isDraggingOver ? "border-primary bg-primary/10" : "border-border"
+                  )}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={onFileChange}
+                    className="hidden"
                   />
-                  <Button
-                    onClick={createPdf}
-                    disabled={isConverting || images.length === 0}
-                    className="w-full sm:w-auto"
-                    size="lg"
-                  >
-                    {isConverting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Converting...
-                      </>
-                    ) : (
-                      <>
-                        <FileDown className="mr-2 h-4 w-4" />
-                        Create & Download PDF
-                      </>
-                    )}
-                  </Button>
+                  <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground" />
+                  <p className="mt-4 text-muted-foreground">Drop files here or click to browse</p>
                 </div>
               </CardContent>
             </Card>
-          )}
+
+            {images.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <GripVertical className="text-primary"/>
+                    Step 2: Reorder Images
+                  </CardTitle>
+                  <CardDescription>Drag and drop the images to set their order in the final PDF.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    {images.map((image, index) => (
+                      <div
+                        key={image.id}
+                        draggable
+                        onDragStart={(e) => onDragStart(e, index)}
+                        onDragEnter={(e) => onDragEnter(e, index)}
+                        onDragEnd={onDragEnd}
+                        className="relative group aspect-square border rounded-lg overflow-hidden shadow-sm cursor-grab active:cursor-grabbing transition-transform will-change-transform"
+                      >
+                        <Image src={image.preview} alt={`preview ${index + 1}`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw" />
+                        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                           <GripVertical className="text-white w-8 h-8" />
+                        </div>
+                        <Button
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                          onClick={() => onRemoveImage(image.id)}
+                        >
+                          <X className="h-4 w-4" />
+                          <span className="sr-only">Remove image</span>
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {images.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileDown className="text-primary"/>
+                    Step 3: Create and Download
+                  </CardTitle>
+                  <CardDescription>Name your PDF file and click the button to generate and download it.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Input
+                      placeholder="Enter PDF name"
+                      value={pdfName}
+                      onChange={(e) => setPdfName(e.target.value)}
+                      className="flex-grow"
+                    />
+                    <Button
+                      onClick={createPdf}
+                      disabled={isConverting || images.length === 0}
+                      className="w-full sm:w-auto"
+                      size="lg"
+                    >
+                      {isConverting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Converting...
+                        </>
+                      ) : (
+                        <>
+                          <FileDown className="mr-2 h-4 w-4" />
+                          Create & Download PDF
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+          <aside className="hidden xl:block">
+            <AdSlot />
+          </aside>
         </div>
       </main>
   );
