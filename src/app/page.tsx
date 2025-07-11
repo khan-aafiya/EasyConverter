@@ -9,7 +9,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
-        <section className="bg-background text-foreground py-20 md:py-32">
+        <section className="bg-background text-foreground py-24 md:py-40">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-bold font-headline mb-4">
               The Easiest Way to Convert Images to PDF
@@ -26,7 +26,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="features" className="py-16 md:py-24 bg-secondary">
+        <section id="features" className="py-20 md:py-32 bg-secondary">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               Features
@@ -80,7 +80,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="how-it-works" className="py-16 md:py-24 bg-background">
+        <section id="how-it-works" className="py-20 md:py-32 bg-background">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               How It Works in 3 Easy Steps
@@ -117,7 +117,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="py-16 md:py-24 bg-secondary">
+        <section className="py-20 md:py-32 bg-secondary">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start?</h2>
             <p className="text-lg text-muted-foreground mb-8">
