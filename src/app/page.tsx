@@ -9,7 +9,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
-        <section className="bg-background text-foreground py-24 md:py-40">
+        <section className="bg-background text-foreground min-h-screen flex items-center justify-center">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-bold font-headline mb-4">
               The Easiest Way to Convert Images to PDF
