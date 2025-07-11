@@ -127,11 +127,6 @@ export default function Home() {
 
     try {
       const { default: jsPDF } = await import('jspdf');
-      const doc = new jsPDF({
-        orientation: 'p',
-        unit: 'mm',
-        format: 'a4'
-      });
       
       const readImage = (imageFile: ImageFile): Promise<{data: string, width: number, height: number, type: string}> => {
         return new Promise((resolve, reject) => {
@@ -150,33 +145,21 @@ export default function Home() {
         });
       };
 
-      for (let i = 0; i < images.length; i++) {
-        const { data, width, height, type } = await readImage(images[i]);
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const margin = 10;
-        const availableWidth = pageWidth - margin * 2;
-        const availableHeight = pageHeight - margin * 2;
-        const ratio = width / height;
-        
-        let imgWidth = width;
-        let imgHeight = height;
+      const firstImage = await readImage(images[0]);
+      
+      const doc = new jsPDF({
+        orientation: firstImage.width > firstImage.height ? 'l' : 'p',
+        unit: 'px',
+        format: [firstImage.width, firstImage.height]
+      });
+      
+      doc.addImage(firstImage.data, firstImage.type, 0, 0, firstImage.width, firstImage.height);
 
-        if (imgWidth > availableWidth || imgHeight > availableHeight) {
-          if (availableWidth / ratio <= availableHeight) {
-            imgWidth = availableWidth;
-            imgHeight = availableWidth / ratio;
-          } else {
-            imgHeight = availableHeight;
-            imgWidth = availableHeight * ratio;
-          }
-        }
-        
-        const x = (pageWidth - imgWidth) / 2;
-        const y = (pageHeight - imgHeight) / 2;
-        
-        if (i > 0) doc.addPage();
-        doc.addImage(data, type, x, y, imgWidth, imgHeight);
+      for (let i = 1; i < images.length; i++) {
+        const { data, width, height, type } = await readImage(images[i]);
+        const orientation = width > height ? 'l' : 'p';
+        doc.addPage([width, height], orientation);
+        doc.addImage(data, type, 0, 0, width, height);
       }
       
       const finalPdfName = pdfName.trim() ? (pdfName.endsWith('.pdf') ? pdfName : `${pdfName}.pdf`) : 'easy-convertor.pdf';
