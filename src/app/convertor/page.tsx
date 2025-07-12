@@ -20,21 +20,18 @@ type ImageFile = {
 
 function AdSlot() {
   const adRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
-    // Only push the ad if the container is visible (has a width)
-    if (adRef.current && adRef.current.offsetWidth > 0) {
-      try {
-        // @ts-ignore
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (err) {
-        console.error("AdSense error:", err);
-      }
+    try {
+      // @ts-ignore
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (err) {
+      console.error("AdSense error:", err);
     }
   }, []);
 
   return (
-    <div ref={adRef} className="w-40 sticky top-8">
+    <div ref={adRef} className="w-40 sticky top-8 hidden xl:block">
       <ins className="adsbygoogle"
            style={{ display: 'block' }}
            data-ad-client="ca-pub-4573761203080537"
@@ -203,8 +200,9 @@ export default function ConvertorPage() {
 
   return (
       <main className="min-h-screen p-4 sm:p-8">
+        <Script id="adsbygoogle-script" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4573761203080537" crossOrigin="anonymous" />
         <div className="flex justify-center gap-8">
-          <aside className="hidden xl:block">
+          <aside>
             <AdSlot />
           </aside>
           <div className="max-w-5xl w-full flex-shrink-0 space-y-8">
@@ -332,10 +330,12 @@ export default function ConvertorPage() {
               </Card>
             )}
           </div>
-          <aside className="hidden xl:block">
+          <aside>
             <AdSlot />
           </aside>
         </div>
       </main>
   );
 }
+
+    
