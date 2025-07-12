@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useToast } from "@/hooks/use-toast"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 type ImageFile = {
   id: string;
@@ -20,25 +21,35 @@ type ImageFile = {
 
 function AdSlot() {
   const adRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    try {
-      // @ts-ignore
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error("AdSense error:", err);
+    // We only want to push the ad when it's not mobile and the ad container is mounted.
+    if (!isMobile && adRef.current) {
+      try {
+        // @ts-ignore
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (err) {
+        console.error("AdSense error:", err);
+      }
     }
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
-    <div ref={adRef} className="w-40 sticky top-8 hidden xl:block">
-      <ins className="adsbygoogle"
-           style={{ display: 'block' }}
-           data-ad-client="ca-pub-4573761203080537"
-           data-ad-slot="6635979897"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
+    <aside ref={adRef} className="w-40 sticky top-8 hidden xl:block">
+      <div className="h-full w-full">
+        <ins className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-4573761203080537"
+            data-ad-slot="6635979897"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
   );
 }
 
@@ -200,11 +211,9 @@ export default function ConvertorPage() {
 
   return (
       <main className="min-h-screen p-4 sm:p-8">
-        <Script id="adsbygoogle-script" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4573761203080537" crossOrigin="anonymous" />
+        <Script id="adsbygoogle-script" strategy="lazyOnload" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4573761203080537" crossOrigin="anonymous" />
         <div className="flex justify-center gap-8">
-          <aside>
-            <AdSlot />
-          </aside>
+          <AdSlot />
           <div className="max-w-5xl w-full flex-shrink-0 space-y-8">
             <header className="text-center relative">
               <Button variant="outline" size="icon" className="absolute top-0 left-0" asChild>
@@ -330,9 +339,7 @@ export default function ConvertorPage() {
               </Card>
             )}
           </div>
-          <aside>
-            <AdSlot />
-          </aside>
+          <AdSlot />
         </div>
       </main>
   );
