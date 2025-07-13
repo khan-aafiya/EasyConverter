@@ -4,7 +4,6 @@
 import { useState, useRef, DragEvent, ChangeEvent, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import { UploadCloud, FileDown, GripVertical, X, Loader2, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -22,7 +21,6 @@ function AdSlot() {
   const adRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if the ad container is rendered and visible before pushing the ad
     if (adRef.current && adRef.current.offsetParent !== null) {
       try {
         // @ts-ignore
