@@ -33,7 +33,7 @@ function AdSlot() {
 
   return (
     <aside ref={adRef} className="w-40 sticky top-8 hidden xl:block">
-      <div className="h-full w-full">
+      <div className="h-full w-full border-2 border-red-500 bg-red-100/50">
         <ins className="adsbygoogle"
             style={{ display: 'block' }}
             data-ad-client="ca-pub-4573761203080537"
