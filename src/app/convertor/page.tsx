@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useToast } from "@/hooks/use-toast"
-import { useIsMobile } from "@/hooks/use-mobile"
 
 type ImageFile = {
   id: string;
@@ -23,6 +22,7 @@ function AdSlot() {
   const adRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if the ad container is rendered and visible before pushing the ad
     if (adRef.current && adRef.current.offsetParent !== null) {
       try {
         // @ts-ignore
@@ -31,7 +31,7 @@ function AdSlot() {
         console.error("AdSense error:", err);
       }
     }
-  }, []); // Run only once on mount
+  }, []);
 
   return (
     <aside ref={adRef} className="w-40 sticky top-8 hidden xl:block">
@@ -205,7 +205,6 @@ export default function ConvertorPage() {
 
   return (
       <main className="min-h-screen p-4 sm:p-8">
-        <Script id="adsbygoogle-script" strategy="lazyOnload" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4573761203080537" crossOrigin="anonymous" />
         <div className="flex justify-center gap-8">
           <AdSlot />
           <div className="max-w-5xl w-full flex-shrink-0 space-y-8">
