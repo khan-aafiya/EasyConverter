@@ -21,11 +21,9 @@ type ImageFile = {
 
 function AdSlot() {
   const adRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
 
   useEffect(() => {
-    // We only want to push the ad when it's not mobile and the ad container is mounted.
-    if (!isMobile && adRef.current) {
+    if (adRef.current && adRef.current.offsetParent !== null) {
       try {
         // @ts-ignore
         (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -33,11 +31,7 @@ function AdSlot() {
         console.error("AdSense error:", err);
       }
     }
-  }, [isMobile]);
-
-  if (isMobile) {
-    return null;
-  }
+  }, []); // Run only once on mount
 
   return (
     <aside ref={adRef} className="w-40 sticky top-8 hidden xl:block">
@@ -344,5 +338,3 @@ export default function ConvertorPage() {
       </main>
   );
 }
-
-    
