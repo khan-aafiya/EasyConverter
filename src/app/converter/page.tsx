@@ -10,6 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useToast } from "@/hooks/use-toast"
+import { Metadata } from 'next';
+import Head from 'next/head';
+
 
 type ImageFile = {
   id: string;
@@ -19,9 +22,32 @@ type ImageFile = {
 
 function AdSlot() {
   const adRef = useRef<HTMLDivElement>(null);
+  const [isAdVisible, setIsAdVisible] = useState(false);
 
   useEffect(() => {
-    if (adRef.current && adRef.current.offsetParent !== null) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsAdVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (adRef.current) {
+      observer.observe(adRef.current);
+    }
+
+    return () => {
+      if (adRef.current) {
+        observer.unobserve(adRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isAdVisible) {
       try {
         // @ts-ignore
         (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -29,7 +55,7 @@ function AdSlot() {
         console.error("AdSense error:", err);
       }
     }
-  }, []);
+  }, [isAdVisible]);
 
   return (
     <aside ref={adRef} className="w-40 sticky top-8 hidden xl:block">
@@ -202,6 +228,28 @@ export default function ConverterPage() {
   };
 
   return (
+    <>
+      <Head>
+        <title>Converter | Easy Converter</title>
+        <meta name="description" content="Convert JPG, PNG, and other images to a single PDF file for free. Upload, reorder, and download your PDF instantly." />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "Image to PDF Converter",
+              "description": "A free online tool to convert images like JPG and PNG into a single PDF document. Users can upload multiple images, reorder them, and download the final PDF.",
+              "applicationCategory": "Utilities",
+              "operatingSystem": "Any (Web)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0"
+              }
+            }),
+          }}
+          />
+      </Head>
       <main className="min-h-screen p-4 sm:p-8">
         <div className="flex justify-center gap-8">
           <AdSlot />
@@ -270,7 +318,7 @@ export default function ConverterPage() {
                         onDragEnd={onDragEnd}
                         className="relative group aspect-square border rounded-lg overflow-hidden shadow-sm cursor-grab active:cursor-grabbing transition-transform will-change-transform"
                       >
-                        <Image src={image.preview} alt={`preview ${index + 1}`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw" />
+                        <Image src={image.preview} alt={`Uploaded image ${index + 1} for PDF conversion.`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw" />
                         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                            <GripVertical className="text-white w-8 h-8" />
                         </div>
@@ -333,5 +381,6 @@ export default function ConverterPage() {
           <AdSlot />
         </div>
       </main>
+    </>
   );
 }
