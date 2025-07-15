@@ -31,7 +31,7 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               Powerful Features, Simple Interface
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <Card>
                 <CardHeader className="items-center">
                   <div className="p-3 bg-primary/10 rounded-full">
@@ -63,17 +63,6 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent className="text-center text-muted-foreground">
                   Generate and download your PDF file instantly, without any waiting.
-                </CardContent>
-              </Card>
-               <Card>
-                <CardHeader className="items-center">
-                  <div className="p-3 bg-primary/10 rounded-full">
-                    <ShieldCheck className="h-8 w-8 text-primary" />
-                  </div>
-                  <CardTitle className="mt-4">Privacy First</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center text-muted-foreground">
-                  Your files are processed in your browser and are never stored on our servers.
                 </CardContent>
               </Card>
             </div>
