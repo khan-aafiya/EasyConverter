@@ -126,7 +126,7 @@ export default function LandingPage() {
             </p>
             <Button asChild size="lg">
               <Link href="/converter">
-                Go to Convertr
+                Go to Converter
                 <ArrowRight className="ml-2" />
               </Link>
             </Button>
