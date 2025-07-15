@@ -1,4 +1,4 @@
-# **App Name**: Easy Convertor
+# **App Name**: Easy Converter
 
 ## Core Features:
 

@@ -33,8 +33,7 @@ function AdSlot() {
 
   return (
     <aside ref={adRef} className="w-40 sticky top-8 hidden xl:block">
-      <div className="h-full w-full border-2 border-dashed border-[#E0BBE4] bg-[#F5F5FF]/50 p-2">
-         <span className="text-muted-foreground text-sm">Advertisement</span>
+      <div className="h-full w-full border-2 border-red-500 bg-red-100/50">
         <ins className="adsbygoogle"
             style={{ display: 'block' }}
             data-ad-client="ca-pub-4573761203080537"
@@ -47,9 +46,9 @@ function AdSlot() {
 }
 
 
-export default function ConvertorPage() {
+export default function ConverterPage() {
   const [images, setImages] = useState<ImageFile[]>([]);
-  const [pdfName, setPdfName] = useState('easy-convertor.pdf');
+  const [pdfName, setPdfName] = useState('easy-converter.pdf');
   const [isConverting, setIsConverting] = useState(false);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const dragImage = useRef<number | null>(null);
@@ -188,7 +187,7 @@ export default function ConvertorPage() {
         doc.addImage(data, type, 0, 0, width, height);
       }
       
-      const finalPdfName = pdfName.trim() ? (pdfName.endsWith('.pdf') ? pdfName : `${pdfName}.pdf`) : 'easy-convertor.pdf';
+      const finalPdfName = pdfName.trim() ? (pdfName.endsWith('.pdf') ? pdfName : `${pdfName}.pdf`) : 'easy-converter.pdf';
       doc.save(finalPdfName);
     } catch (error) {
       console.error("Failed to create PDF:", error);
@@ -203,24 +202,24 @@ export default function ConvertorPage() {
   };
 
   return (
-      <main className="min-h-screen p-4 sm:p-8 bg-[#F5F5FF]">
+      <main className="min-h-screen p-4 sm:p-8">
         <div className="flex justify-center gap-8">
           <AdSlot />
           <div className="max-w-5xl w-full flex-shrink-0 space-y-8">
             <header className="text-center relative">
-              <Button variant="outline" size="icon" className="absolute top-0 left-0 bg-white" asChild>
+              <Button variant="outline" size="icon" className="absolute top-0 left-0" asChild>
                 <Link href="/" aria-label="Back to Home">
-                  <Home className="h-4 w-4 text-[#957DAD]" />
+                  <Home className="h-4 w-4" />
                 </Link>
               </Button>
-              <h1 className="font-headline text-4xl sm:text-5xl font-bold text-gray-800">Easy Convertor</h1>
+              <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Easy Convertor</h1>
               <p className="text-muted-foreground mt-2 text-lg">Convert your images to PDF in three simple steps.</p>
             </header>
 
-            <Card className="bg-white">
+            <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-gray-800">
-                  <UploadCloud className="text-[#957DAD]"/>
+                <CardTitle className="flex items-center gap-2">
+                  <UploadCloud className="text-primary"/>
                   Step 1: Upload Images
                 </CardTitle>
                 <CardDescription>Drag & drop your images or click to select files. You can reorder them later.</CardDescription>
@@ -233,8 +232,8 @@ export default function ConvertorPage() {
                   onClick={() => fileInputRef.current?.click()}
                   className={cn(
                     "border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors",
-                    "hover:border-[#957DAD] hover:bg-primary/20",
-                    isDraggingOver ? "border-[#957DAD] bg-primary/30" : "border-border"
+                    "hover:border-primary hover:bg-primary/5",
+                    isDraggingOver ? "border-primary bg-primary/10" : "border-border"
                   )}
                 >
                   <input
@@ -252,10 +251,10 @@ export default function ConvertorPage() {
             </Card>
 
             {images.length > 0 && (
-              <Card className="bg-white">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-gray-800">
-                    <GripVertical className="text-[#957DAD]"/>
+                  <CardTitle className="flex items-center gap-2">
+                    <GripVertical className="text-primary"/>
                     Step 2: Reorder Images
                   </CardTitle>
                   <CardDescription>Drag and drop the images to set their order in the final PDF.</CardDescription>
@@ -292,10 +291,10 @@ export default function ConvertorPage() {
             )}
 
             {images.length > 0 && (
-              <Card className="bg-white">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-gray-800">
-                    <FileDown className="text-[#957DAD]"/>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileDown className="text-primary"/>
                     Step 3: Create and Download
                   </CardTitle>
                   <CardDescription>Name your PDF file and click the button to generate and download it.</CardDescription>
@@ -306,12 +305,12 @@ export default function ConvertorPage() {
                       placeholder="Enter PDF name"
                       value={pdfName}
                       onChange={(e) => setPdfName(e.target.value)}
-                      className="flex-grow bg-white"
+                      className="flex-grow"
                     />
                     <Button
                       onClick={createPdf}
                       disabled={isConverting || images.length === 0}
-                      className="w-full sm:w-auto bg-[#E0BBE4] text-gray-800 hover:bg-[#d4a9d8]"
+                      className="w-full sm:w-auto"
                       size="lg"
                     >
                       {isConverting ? (
