@@ -117,6 +117,18 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section id="privacy" className="py-20 md:py-32 bg-background">
+          <div className="container mx-auto px-4 text-center max-w-4xl">
+              <div className="flex justify-center mb-4">
+                  <ShieldCheck className="h-12 w-12 text-primary" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Your Privacy is Our Priority</h2>
+              <p className="text-lg text-muted-foreground">
+                  We believe in true privacy, which is why Easy Converter is built to work entirely in your browser. When you upload images, they are not sent to our servers. All the processing and conversion happens locally on your own computer. Your files never leave your device, ensuring complete confidentiality. We do not store, see, or have access to any of your images or the final PDF.
+              </p>
+          </div>
+        </section>
+
         <section className="py-20 md:py-32 bg-secondary">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start?</h2>
