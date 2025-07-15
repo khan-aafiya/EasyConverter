@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Move, MousePointerClick, Download, FileImage, UploadCloud } from 'lucide-react';
+import { ArrowRight, Move, MousePointerClick, Download, FileImage, UploadCloud, ShieldCheck } from 'lucide-react';
 import Footer from '@/components/footer';
 
 export default function LandingPage() {
@@ -15,7 +15,7 @@ export default function LandingPage() {
               The Easiest Way to Convert Images to PDF
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Drag, drop, reorder, and convert. Create professional PDFs from your images in seconds. Free and easy to use, right in your browser.
+              Drag, drop, reorder, and convert. Create professional PDFs from your images in seconds. Free, private, and easy to use, right in your browser.
             </p>
             <Button asChild size="lg">
               <Link href="/converter">
@@ -29,7 +29,7 @@ export default function LandingPage() {
         <section id="features" className="py-20 md:py-32 bg-secondary">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Features
+              Powerful Features, Simple Interface
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card>
@@ -57,23 +57,23 @@ export default function LandingPage() {
               <Card>
                 <CardHeader className="items-center">
                   <div className="p-3 bg-primary/10 rounded-full">
-                    <FileImage className="h-8 w-8 text-primary" />
-                  </div>
-                  <CardTitle className="mt-4">Custom Page Sizes</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center text-muted-foreground">
-                  Each page in the PDF is perfectly sized to match its image dimensions.
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="items-center">
-                   <div className="p-3 bg-primary/10 rounded-full">
                     <Download className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle className="mt-4">Instant Download</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center text-muted-foreground">
                   Generate and download your PDF file instantly, without any waiting.
+                </CardContent>
+              </Card>
+               <Card>
+                <CardHeader className="items-center">
+                  <div className="p-3 bg-primary/10 rounded-full">
+                    <ShieldCheck className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="mt-4">Privacy First</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center text-muted-foreground">
+                  Your files are processed in your browser and are never stored on our servers.
                 </CardContent>
               </Card>
             </div>
